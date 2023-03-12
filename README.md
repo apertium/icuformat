@@ -9,6 +9,7 @@ genrb -d locales ./locales/*.txt
 ```
 ## How to use
 follow build instructions then run by executing:
+
 ```
 ./icuformat key args
 ```
