@@ -12,4 +12,5 @@ follow build instructions then run by executing:
 ```
 ./icuformat key args
 ```
+
 you can also use `test.sh`
