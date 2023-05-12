@@ -4,14 +4,18 @@ Note: instructions expect that you are in linux and installed icu.
 
 ## How to build
 ```
-g++ icuformat.cpp -o icuformat `pkg-config --libs --cflags icu-uc icu-i18n icu-io`
-genrb -d locales ./locales/*.txt
+autoreconf --install
+./configure --prefix path_of_installation
+make
+make install
 ```
 ## How to use
 follow build instructions then run by executing:
 
 ```
-./icuformat key args
+./path_of_install/bin/icuformat key
 ```
-
-you can also use `test.sh`
+or use for test
+```
+./path_of_install/bin/test
+```
