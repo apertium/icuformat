@@ -32,7 +32,8 @@ Makefile.in
 
 /*.pc
 *.res
-/src/hello_with_icu
+./src/icuformat
+./src/test
 .vscode
 stamp-h1
 /build
