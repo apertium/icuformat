@@ -17,7 +17,6 @@ I18n::I18n(const char* locales_path) : resource("", "", status)
         std::cerr << "Error in accessing locales directory!" << std::endl;
         exit(EXIT_FAILURE);
     }
-    status = U_ZERO_ERROR;
 }
 
 icu::UnicodeString I18n::format(const char* key, const std::vector<icu::Formattable> args)
