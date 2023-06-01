@@ -32,8 +32,9 @@ Makefile.in
 
 /*.pc
 *.res
-./src/icuformat
-./src/test
+*.dat
+/src/icuformat
+/src/test
 .vscode
 stamp-h1
 /build

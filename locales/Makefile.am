@@ -1,5 +1,7 @@
-root.res en.res: root.txt en.txt
-	genrb -d . ./*.txt
+locales.dat: root.txt en.txt
+	genrb -d . root.txt en.txt
+	echo root.res en.res > package_list.txt
+	pkgdata -w -p locales --mode archive -d . package_list.txt
 
 localesdir = $(LOCALES_DIR)
-dist_locales_DATA = root.res en.res
+dist_locales_DATA = locales.dat
