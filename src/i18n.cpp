@@ -5,38 +5,37 @@
 #include <unicode/msgfmt.h>
 #include <unicode/udata.h>
 #include <filesystem>
+#include <fstream>
 #include <vector>
+#include <memory>
 #include "i18n.h"
 
 I18n::I18n(const char *locales_path) : resource("", "", status)
 {
     status = U_ZERO_ERROR;
 
-    FILE *file = fopen(locales_path, "r");
-    if (file == NULL) {
+    std::ifstream file;
+    file.open(locales_path);
+
+    if (!file.is_open()) {
         std::cerr << "Error in opening data file!" << std::endl;
         exit(EXIT_FAILURE);
     }
+
     size_t file_size = std::filesystem::file_size(std::filesystem::path{locales_path});
-    
-    void *locales_data = malloc(file_size);
-    size_t success_reads = fread(locales_data, 1, file_size, file);
 
-    if (success_reads != file_size) {
-        std::cerr << "Error in loading data file!" << std::endl;
-        exit(EXIT_FAILURE);
-    }
+    auto locales_data = std::make_unique<char[]>(file_size);
 
-    udata_setAppData("locales", locales_data, &status);
+    file.read(locales_data.get(), file_size);
     
-    fclose(file);
-    free(locales_data);
+    udata_setAppData("locales", locales_data.get(), &status);
 
     if (!U_SUCCESS(status)) {
         std::cerr << "Error in loading data!" << std::endl;
         std::cerr << u_errorName(status) << std::endl;
         exit(EXIT_FAILURE);
     }
+
     resource = icu::ResourceBundle("locales", icu::Locale().getName(), status);
 
     if (!U_SUCCESS(status)) {
