@@ -22,7 +22,7 @@ I18n::I18n(const char *locales_path) : resource("", "", status)
         exit(EXIT_FAILURE);
     }
 
-    size_t file_size = std::filesystem::file_size(std::filesystem::path{locales_path});
+    std::streamsize file_size = std::filesystem::file_size(std::filesystem::path{locales_path});
 
     auto locales_data = std::make_unique<char[]>(file_size);
 
