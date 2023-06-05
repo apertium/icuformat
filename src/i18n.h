@@ -11,7 +11,7 @@ private:
     icu::ResourceBundle resource;
     UErrorCode status;
 public:
-    I18n(const char* locales_dir);
+    I18n(const char *locales_path);
     icu::UnicodeString format(const char* key, const std::vector<icu::Formattable> args = {});
 };
 #endif

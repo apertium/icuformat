@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-    I18n i18n {LOCALES_DIR};
+    I18n i18n {LOCALES_DATA};
     
     std::vector<icu::Formattable> arguments;
     for (int i = 2; i < argc; i++) {
@@ -17,6 +17,5 @@ int main(int argc, char* argv[])
     }
 
     std::cout << i18n.format(argv[1], arguments) << std::endl;
-    
     return 0;
 }
