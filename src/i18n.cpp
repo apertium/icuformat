@@ -39,7 +39,8 @@ I18n::I18n(const char *locales_path) : resource("", "", status)
     resource = icu::ResourceBundle("locales", icu::Locale().getName(), status);
 
     if (!U_SUCCESS(status)) {
-        std::cerr << "Error in accessing locales directory!" << std::endl;
+        std::cerr << "Error in initializing resource bundle" << std::endl;
+        std::cerr << u_errorName(status) << std::endl;
         exit(EXIT_FAILURE);
     }
 }
@@ -52,18 +53,21 @@ icu::UnicodeString I18n::format(const char* key, const std::vector<icu::Formatta
     icu::ResourceBundle resource_object = resource.get(key, status);
     if (!U_SUCCESS(status)) {
         std::cerr << "Error: key not found!" << std::endl;
+        std::cerr << u_errorName(status) << std::endl;
         exit(EXIT_FAILURE);
     }
 
     pattern = resource_object.getString(status);
     if (!U_SUCCESS(status)) {
         std::cerr << "Error in getting key text!" << std::endl;
+        std::cerr << u_errorName(status) << std::endl;
         exit(EXIT_FAILURE);
     }
 
     icu::MessageFormat::format(pattern, args.data(), args.size(), output, status);
     if (!U_SUCCESS(status)) {
         std::cerr << "Error in formatting!" << std::endl;
+        std::cerr << u_errorName(status) << std::endl;
         exit(EXIT_FAILURE);
     }
 
