@@ -1,5 +1,2 @@
 root:table {
-  hello_message:string { "Hello World" }
-  test_message:string { "Message for test" }
-  complex_message:string { "Hello {0}, you are in {1}!" }
 }
