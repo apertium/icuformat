@@ -74,3 +74,41 @@ icu::UnicodeString I18n::format(const char* key, const std::vector<icu::Formatta
     return output;
 }
 
+
+icu::UnicodeString I18n::format(const char* key, const std::vector<icu::UnicodeString> arg_names, const std::vector<icu::Formattable> arg_values)
+{
+    icu::UnicodeString pattern;
+    icu::UnicodeString output;
+    
+    icu::ResourceBundle resource_object = resource.get(key, status);
+    if (!U_SUCCESS(status)) {
+        std::cerr << "Error: key not found!" << std::endl;
+        std::cerr << u_errorName(status) << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    pattern = resource_object.getString(status);
+    if (!U_SUCCESS(status)) {
+        std::cerr << "Error in getting key text!" << std::endl;
+        std::cerr << u_errorName(status) << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    icu::MessageFormat formatter {pattern, status};
+    if (!U_SUCCESS(status)) {
+        std::cerr << "Error in formatting!" << std::endl;
+        std::cerr << u_errorName(status) << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    formatter.format(arg_names.data(), arg_values.data(), arg_values.size(), output, status);
+    
+    if (!U_SUCCESS(status)) {
+        std::cerr << "Error in formatting!" << std::endl;
+        std::cerr << u_errorName(status) << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    return output;
+}
+

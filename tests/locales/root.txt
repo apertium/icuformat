@@ -1,4 +1,4 @@
 root:table {
   simple_message:string { "Hello World" }
-  complex_message:string { "Hello {0}, you are {1} years old!" }
+  complex_message:string { "Hello {name}, you are {age} years old!" }
 }

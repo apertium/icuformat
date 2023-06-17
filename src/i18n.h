@@ -13,5 +13,6 @@ private:
 public:
     I18n(const char *locales_path);
     icu::UnicodeString format(const char* key, const std::vector<icu::Formattable> args = {});
+    icu::UnicodeString format(const char* key, const std::vector<icu::UnicodeString> arg_names, const std::vector<icu::Formattable> arg_values);
 };
 #endif
