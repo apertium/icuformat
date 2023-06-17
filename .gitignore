@@ -38,3 +38,6 @@ Makefile.in
 .vscode
 stamp-h1
 /build
+ar-lib
+/m4
+/src/.libs
