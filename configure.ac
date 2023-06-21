@@ -7,6 +7,7 @@ AC_CONFIG_FILES([
  Makefile
  src/Makefile
  locales/Makefile
+ i18n.pc
 ])
 AC_CONFIG_MACRO_DIRS([m4])
 

@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: i18n
+Version: 0.1.0
+Description: 
+Cflags: -I${includedir}
+Libs: -L${libdir} -li18n
