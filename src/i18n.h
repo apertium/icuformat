@@ -4,11 +4,13 @@
 #include <unicode/ustring.h>
 #include <unicode/msgfmt.h>
 #include <vector>
+#include <memory>
 
 class I18n
 {
 private:
     icu::ResourceBundle resource;
+    std::unique_ptr<char[]> locales_data;
     UErrorCode status;
 public:
     I18n(const char *locales_path);

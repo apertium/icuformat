@@ -24,7 +24,7 @@ I18n::I18n(const char *locales_path) : resource("", "", status)
 
     std::streamsize file_size = std::filesystem::file_size(std::filesystem::path{locales_path});
 
-    auto locales_data = std::make_unique<char[]>(file_size);
+    locales_data = std::make_unique<char[]>(file_size);
 
     file.read(locales_data.get(), file_size);
     
