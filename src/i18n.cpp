@@ -9,6 +9,7 @@
 #include <vector>
 #include <memory>
 #include "i18n.h"
+#include <iostream>
 
 I18n::I18n(const char *locales_path) : resource("", "", status)
 {
@@ -75,7 +76,8 @@ icu::UnicodeString I18n::format(const char* key, const std::vector<icu::Formatta
 }
 
 
-icu::UnicodeString I18n::format(const char* key, const std::vector<icu::UnicodeString> arg_names, const std::vector<icu::Formattable> arg_values)
+icu::UnicodeString I18n::format(const char* key, const std::vector<icu::UnicodeString> arg_names,
+                                                 const std::vector<icu::Formattable> arg_values)
 {
     icu::UnicodeString pattern;
     icu::UnicodeString output;
@@ -112,3 +114,11 @@ icu::UnicodeString I18n::format(const char* key, const std::vector<icu::UnicodeS
     return output;
 }
 
+void I18n::error(const char* key, const std::vector<icu::UnicodeString> arg_names,
+                                  const std::vector<icu::Formattable> arg_values, bool quit)
+{
+    std::cerr << format(key, arg_names, arg_values) << std::endl;
+    if (quit) {
+        exit(EXIT_FAILURE);
+    }
+}
