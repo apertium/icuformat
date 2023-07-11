@@ -9,8 +9,9 @@
 class I18n
 {
 private:
+    static const char *locales_path;
     icu::ResourceBundle resource;
-    std::unique_ptr<char[]> locales_data;
+    static std::unique_ptr<char[]> locales_data;
     UErrorCode status;
 public:
     I18n(const char *locales_path);

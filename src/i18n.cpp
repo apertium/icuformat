@@ -11,30 +11,37 @@
 #include "i18n.h"
 #include <iostream>
 
+
+const char* I18n::locales_path = "";
+std::unique_ptr<char[]> I18n::locales_data;
+
 I18n::I18n(const char *locales_path) : resource("", "", status)
 {
     status = U_ZERO_ERROR;
+    if (I18n::locales_path != locales_path) {
+        I18n::locales_path = locales_path;
 
-    std::ifstream file;
-    file.open(locales_path);
+        std::ifstream file;
+        file.open(locales_path);
 
-    if (!file.is_open()) {
-        std::cerr << "Error in opening data file!" << std::endl;
-        exit(EXIT_FAILURE);
-    }
+        if (!file.is_open()) {
+            std::cerr << "Error in opening data file!" << std::endl;
+            exit(EXIT_FAILURE);
+        }
 
-    std::streamsize file_size = std::filesystem::file_size(std::filesystem::path{locales_path});
+        std::streamsize file_size = std::filesystem::file_size(std::filesystem::path{locales_path});
 
-    locales_data = std::make_unique<char[]>(file_size);
+        locales_data = std::make_unique<char[]>(file_size);
 
-    file.read(locales_data.get(), file_size);
+        file.read(locales_data.get(), file_size);
     
-    udata_setAppData("locales", locales_data.get(), &status);
+        udata_setAppData("locales", locales_data.get(), &status);
 
-    if (!U_SUCCESS(status)) {
-        std::cerr << "Error in loading data!" << std::endl;
-        std::cerr << u_errorName(status) << std::endl;
-        exit(EXIT_FAILURE);
+        if (!U_SUCCESS(status)) {
+            std::cerr << "Error in loading data!" << std::endl;
+            std::cerr << u_errorName(status) << std::endl;
+            exit(EXIT_FAILURE);
+        }
     }
 
     resource = icu::ResourceBundle("locales", icu::Locale().getName(), status);
