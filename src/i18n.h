@@ -5,16 +5,16 @@
 #include <unicode/msgfmt.h>
 #include <vector>
 #include <memory>
+#include <unordered_map>
 
 class I18n
 {
 private:
-    static const char *locales_path;
+    static std::unordered_map<std::string, std::unique_ptr<char[]>> locales_data;
     icu::ResourceBundle resource;
-    static std::unique_ptr<char[]> locales_data;
     UErrorCode status;
 public:
-    I18n(const char *locales_path);
+    I18n(const char *locales_path, std::string package_name);
     icu::UnicodeString format(const char* key, const std::vector<icu::Formattable> args = {});
     icu::UnicodeString format(const char* key, const std::vector<icu::UnicodeString> arg_names,
                                                const std::vector<icu::Formattable> arg_values);

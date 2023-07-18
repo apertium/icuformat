@@ -11,16 +11,13 @@
 #include "i18n.h"
 #include <iostream>
 
+std::unordered_map<std::string, std::unique_ptr<char[]>> I18n::locales_data;
 
-const char* I18n::locales_path = "";
-std::unique_ptr<char[]> I18n::locales_data;
-
-I18n::I18n(const char *locales_path) : resource("", "", status)
+I18n::I18n(const char *locales_path, std::string package_name) : resource("", "", status)
 {
     status = U_ZERO_ERROR;
-    if (I18n::locales_path != locales_path) {
-        I18n::locales_path = locales_path;
-
+    if (locales_data.find(package_name) == locales_data.end()) {
+        
         std::ifstream file;
         file.open(locales_path);
 
@@ -31,11 +28,11 @@ I18n::I18n(const char *locales_path) : resource("", "", status)
 
         std::streamsize file_size = std::filesystem::file_size(std::filesystem::path{locales_path});
 
-        locales_data = std::make_unique<char[]>(file_size);
+        locales_data[package_name] = std::make_unique<char[]>(file_size);
 
-        file.read(locales_data.get(), file_size);
-    
-        udata_setAppData("locales", locales_data.get(), &status);
+        file.read(locales_data[package_name].get(), file_size);
+
+        udata_setAppData(package_name.c_str(), locales_data[package_name].get(), &status);
 
         if (!U_SUCCESS(status)) {
             std::cerr << "Error in loading data!" << std::endl;
@@ -43,8 +40,8 @@ I18n::I18n(const char *locales_path) : resource("", "", status)
             exit(EXIT_FAILURE);
         }
     }
-
-    resource = icu::ResourceBundle("locales", icu::Locale().getName(), status);
+    
+    resource = icu::ResourceBundle(package_name.c_str(), icu::Locale().getName(), status);
 
     if (!U_SUCCESS(status)) {
         std::cerr << "Error in initializing resource bundle" << std::endl;
