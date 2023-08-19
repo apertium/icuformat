@@ -1,5 +1,4 @@
 #include <iostream>
-#include <unicode/ustream.h>
 #include "i18n.h"
 
 int main(int argc, char* argv[])

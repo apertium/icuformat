@@ -1,11 +1,13 @@
 #ifndef _I18N_
 #define _I18N_
-#include <unicode/resbund.h>
-#include <unicode/ustring.h>
-#include <unicode/msgfmt.h>
 #include <vector>
 #include <memory>
 #include <unordered_map>
+
+#include <unicode/ustream.h>
+#include <unicode/resbund.h>
+#include <unicode/ustring.h>
+#include <unicode/msgfmt.h>
 
 class I18n
 {

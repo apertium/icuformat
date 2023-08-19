@@ -1,15 +1,9 @@
-#include <unicode/ustream.h>
-#include <unicode/resbund.h>
-#include <unicode/locid.h>
-#include <unicode/ustring.h>
-#include <unicode/msgfmt.h>
-#include <unicode/udata.h>
 #include <filesystem>
 #include <fstream>
-#include <vector>
-#include <memory>
-#include "i18n.h"
 #include <iostream>
+#include <unicode/locid.h>
+#include <unicode/udata.h>
+#include "i18n.h"
 
 std::unordered_map<std::string, std::unique_ptr<char[]>> I18n::locales_data;
 
