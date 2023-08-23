@@ -17,6 +17,8 @@ I18n::I18n(const char *locales_path, std::string package_name) : resource("", ""
 
         if (!file.is_open()) {
             std::cerr << "Error in opening data file!" << std::endl;
+            std::cerr << "File: " << locales_path << std::endl;
+            std::cerr << "Package Name: " << package_name << std::endl;
             exit(EXIT_FAILURE);
         }
 
@@ -30,6 +32,7 @@ I18n::I18n(const char *locales_path, std::string package_name) : resource("", ""
 
         if (!U_SUCCESS(status)) {
             std::cerr << "Error in loading data!" << std::endl;
+            std::cerr << "Package Name: " << package_name << std::endl;
             std::cerr << u_errorName(status) << std::endl;
             exit(EXIT_FAILURE);
         }
@@ -39,6 +42,7 @@ I18n::I18n(const char *locales_path, std::string package_name) : resource("", ""
 
     if (!U_SUCCESS(status)) {
         std::cerr << "Error in initializing resource bundle" << std::endl;
+        std::cerr << "Package Name: " << package_name << std::endl;
         std::cerr << u_errorName(status) << std::endl;
         exit(EXIT_FAILURE);
     }
@@ -52,6 +56,7 @@ icu::UnicodeString I18n::format(const char* key, const std::vector<icu::Formatta
     icu::ResourceBundle resource_object = resource.get(key, status);
     if (!U_SUCCESS(status)) {
         std::cerr << "Error: key not found!" << std::endl;
+        std::cerr << "Key: " << key << std::endl;
         std::cerr << u_errorName(status) << std::endl;
         exit(EXIT_FAILURE);
     }
@@ -59,6 +64,7 @@ icu::UnicodeString I18n::format(const char* key, const std::vector<icu::Formatta
     pattern = resource_object.getString(status);
     if (!U_SUCCESS(status)) {
         std::cerr << "Error in getting key text!" << std::endl;
+        std::cerr << "Key: " << key << std::endl;
         std::cerr << u_errorName(status) << std::endl;
         exit(EXIT_FAILURE);
     }
@@ -66,6 +72,7 @@ icu::UnicodeString I18n::format(const char* key, const std::vector<icu::Formatta
     icu::MessageFormat::format(pattern, args.data(), args.size(), output, status);
     if (!U_SUCCESS(status)) {
         std::cerr << "Error in formatting!" << std::endl;
+        std::cerr << "Key: " << key << std::endl;
         std::cerr << u_errorName(status) << std::endl;
         exit(EXIT_FAILURE);
     }
@@ -83,6 +90,7 @@ icu::UnicodeString I18n::format(const char* key, const std::vector<icu::UnicodeS
     icu::ResourceBundle resource_object = resource.get(key, status);
     if (!U_SUCCESS(status)) {
         std::cerr << "Error: key not found!" << std::endl;
+        std::cerr << "Key: " << key << std::endl;
         std::cerr << u_errorName(status) << std::endl;
         exit(EXIT_FAILURE);
     }
@@ -90,6 +98,7 @@ icu::UnicodeString I18n::format(const char* key, const std::vector<icu::UnicodeS
     pattern = resource_object.getString(status);
     if (!U_SUCCESS(status)) {
         std::cerr << "Error in getting key text!" << std::endl;
+        std::cerr << "Key: " << key << std::endl;
         std::cerr << u_errorName(status) << std::endl;
         exit(EXIT_FAILURE);
     }
@@ -97,6 +106,7 @@ icu::UnicodeString I18n::format(const char* key, const std::vector<icu::UnicodeS
     icu::MessageFormat formatter {pattern, status};
     if (!U_SUCCESS(status)) {
         std::cerr << "Error in formatting!" << std::endl;
+        std::cerr << "Key: " << key << std::endl;
         std::cerr << u_errorName(status) << std::endl;
         exit(EXIT_FAILURE);
     }
